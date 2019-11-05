@@ -18,7 +18,7 @@ import types
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
 
-from models.gradient_scaler import MinNormElement
+# from models.gradient_scaler import MinNormElement
 import losses
 import datasets
 import metrics
@@ -85,6 +85,7 @@ def train_multi_task(param_file):
                 param_group['lr'] *= 0.85
             print('Half the learning rate{}'.format(n_iter))
 
+        #Sets the module in traning mode.
         for m in model:
             model[m].train()
 
@@ -187,7 +188,8 @@ def train_multi_task(param_file):
             writer.add_scalar('training_loss', loss.data[0], n_iter)
             for t in tasks:
                 writer.add_scalar('training_loss_{}'.format(t), loss_data[t], n_iter)
-
+        
+        # Sets the module in evaluation mode.
         for m in model:
             model[m].eval()
 
